@@ -4,17 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "90e2c0387e18fda5",
+        "id": "66d8c136a958d7ec",
         "type": "tabs",
         "children": [
           {
-            "id": "58e0f63abc8905b8",
+            "id": "a7b55cad1768d1ac",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "type": "canvas",
+              "state": {
+                "file": "未命名.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": 0,
+                  "zoom": 0
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "未命名"
             }
           }
         ]
@@ -174,13 +181,17 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "workspaces:管理工作区布局": false
     }
   },
-  "active": "53e5cc621b651d09",
+  "active": "a7b55cad1768d1ac",
   "lastOpenFiles": [
+    "Readme.md",
+    "未命名.canvas",
     "未命名.base",
-    "未命名 1.base",
-    "Readme.md"
+    "2026-01-30.md",
+    "obj/Debug/net10.0/cuqdqqii.uhv~",
+    "未命名 1.base"
   ]
 }

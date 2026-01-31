@@ -1,0 +1,40 @@
+﻿@page "/servers/{id:int}"
+
+@if(!string.IsNullOrEmpty(test) && server != null)
+{
+	<EditForm Model="server" FormName="editServerForm" OnSubmit="submit">
+		<InputNumber @bind-Value="@server.ServerId" hidden>   	</InputNumber>
+		<InputText @bind-Value="@server.Name">   	</InputText>
+		<InputText @bind-Value="@server.City">   	</InputText>
+		<InputCheckbox @bind-Value="@server.IsOnline">   	</InputCheckbox>
+		
+		<br />
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">更新</MudButton>
+		<br />
+		<a href="/servers" class="btn btn-primary">返回服务器列表</a>
+
+	</EditForm>
+}
+
+
+
+
+@code {
+	[Parameter]
+	public int id { get; set; }
+	private string? test;
+
+	[SupplyParameterFromForm(FormName ="editServerForm")]
+	private Server? server { get; set;}	
+
+	protected override void OnParametersSet()
+	{
+		test = $"当前服务器id为：{id}";
+		server ??= ServerRepository.GetById(id);
+	}
+
+	private void submit(EditContext args)
+	{
+		ServerRepository.Update(server);
+	}
+}

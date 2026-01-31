@@ -4,14 +4,23 @@
 
 <h3>Servers</h3>
 <br />
-<br />
+<div class="container-fluid text-center">
+	<div class="row w-150">
+		@* 按钮 *@
+		@foreach (var srv in server)
+		{
+			<div class="card" style="width: 18rem;">
+				<img src="/images/Test.jpeg" class="card-img-top" >
+				<div class="card-body">
+					<button type="button" class="btn btn-primary">@srv.City</button>
+				</div>
+			</div>
+		}
+	</div>
 
-@* 按钮 *@
-@foreach (var city in citys)
-{
-	<MudButton Variant="Variant.Text" Color="Color.Primary">@city</MudButton>
-	<text> &nbsp; </text>
-}
+
+</div>
+
 
 
 <ul>
@@ -19,10 +28,10 @@
 	{
 		<li style="color:@(srv.IsOnline ? "green" : "red")">
 			@($"name is {srv.Name} city is {srv.City} and isonline:{(srv.IsOnline ? "在线" : "离线")}")
+			&nbsp;
+			<a href="@($"servers/{srv.ServerId}")" class="btn btn-link">Edit</a>
 		</li>
 	}
-		
- 
 </ul>
         
 <ServerComponent></ServerComponent>
@@ -30,21 +39,7 @@
 <ServerComponent></ServerComponent>
 
 @code {
-	private List<Server> server = new List<Server>()
-	{
-		new Server(){Name="Test1",City="TestCity1",ServerId=1 },
-		new Server(){Name="Test2",City="TestCity2",ServerId=2 },
-		new Server(){Name="Test3",City="TestCity3",ServerId=3 },
-		new Server(){Name="Test4",City="TestCity4",ServerId=4 },
-		new Server(){Name="Test5",City="TestCity5",ServerId=5 }
-	};
 
-	/// <summary>
-	/// 按钮列表
-	/// </summary>
-	private List<string> citys = new List<string>()
-	{
-		"Beijing","Shanghai","Guangzhou","Shenzhen","Chengdu"
-	};
+	IReadOnlyList<Server>? server = ServerRepository.GetAll();
 
 }

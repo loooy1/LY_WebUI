@@ -23,7 +23,10 @@ app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
+//映射静态资源
 app.MapStaticAssets();
+
+//映射 Razor 组件
 app.MapRazorComponents<App>();
 
 app.Run();
