@@ -18,26 +18,17 @@ step6  wwwroot 静态资源
 <details>
 <summary>## 包</summary>
 
-1.正确引入MudBlazor包
+1.正确引入MudBlazor包(不支持net10)
 ```
+登陆Mudblazor官网，查看说明文档 https://mudblazor.com/getting-started/installation
 1：nuget下载MudBlazor
 2：_Imports.razor 引入MudBlazor命名空间
 3：Program.cs  引入MudBlazor服务
-4：MainLayout.razor 引入MudBlazor样式
-@* 引入MudBlazor样式 *@
-{
-@* Required *@
-<MudThemeProvider />
-<MudPopoverProvider />
+4：根据说明文档 重写 MainLayout.razor 引入MudBlazor样式
 
-@* Needed for dialogs *@
-<MudDialogProvider />
+5：根据说明文档 重写 NavMenu.razor 使用MudBlazor组件
 
-@* Needed for snackbars *@
-<MudSnackbarProvider />
-}
-
-5：App.razor  使用MudBlazor组件
+6：App.razor  使用MudBlazor组件
 @* 使用MudBlazor组件 *@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 <link href="@Assets["_content/MudBlazor/MudBlazor.min.css"]" rel="stylesheet" />
@@ -87,6 +78,23 @@ server ??= ServerRepository.GetById(id);
 9.数据注解和表单验证(MudBlazor有现成的)
 
 10.导航管理器 NavigationManager 依赖注入 inject 注册和webapi一样
+
+11.流式渲染 @attribute [StreamRendering]
+
+12.交互性和非交互性 应用程序
+```
+•交互性应用（interactive）：页面在浏览器端有活跃的运行时，能响应用户事件（@onclick、表单交互）、
+局部重渲染并保持组件状态。Blazor 的交互性由 Blazor 运行时提供（Blazor.web.js文件）。
+非blazor应用的交互性通常由 JavaScript 提供。
+•非交互性应用（non‑interactive）：服务器返回的是静态或服务器端完全渲染的 HTML，客户端没有或没有激活运行时，
+用户交互只能通过整页刷新提交到服务器（传统静态站点、纯 SSR 页面、或只做预渲染但不激活的组件）。
+
+13.增强导航
+
+```切换界面时，更新部分界面而不刷新整个页面，是实现交互性应用程序的关键。Blazor 提供了增强导航功能(Blazor.web.js文件)。
+
+14.增强表单
+
 ```
 
 

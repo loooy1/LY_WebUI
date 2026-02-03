@@ -1,7 +1,5 @@
 ﻿@page "/servers"
 
-
-
 <h3>Servers</h3>
 <br />
 <div class="container-fluid text-center">
@@ -14,6 +12,8 @@
 				<div class="card-body">
 					<button type="button" class="btn btn-primary">@srv.City</button>
 				</div>
+
+
 			</div>
 		}
 	</div>
@@ -26,10 +26,17 @@
 <ul>
 	@foreach (var srv in server)
 	{
-		<li style="color:@(srv.IsOnline ? "green" : "red")">
+		<li style="color:@(srv.IsOnline ? "green" : "red"); display: flex; align-items: center; gap: 8px;">
 			@($"name is {srv.Name} city is {srv.City} and isonline:{(srv.IsOnline ? "在线" : "离线")}")
-			&nbsp;
-			<a href="@($"servers/Edit{srv.ServerId}")" class="btn btn-link">Edit</a>
+
+			<!-- Edit 链接按钮 -->
+			<a href="@($"servers/Edit{srv.ServerId}")" class="btn btn-link" style="display: inline-block;">Edit</a>
+
+			<!-- 删除表单：改为行内块，加左边距 -->
+			<EditForm Model="server" FormName="@($"from_{srv.ServerId}")" OnValidSubmit="@(() => Delete(srv.ServerId))"
+					  style="display: inline-block; margin: 0; padding: 0;">
+				<button type="submit" class="btn btn-primary" style="padding: 2px 8px; font-size: 12px;">删除</button>
+			</EditForm>
 		</li>
 	}
 </ul>
@@ -40,10 +47,17 @@
         
 <ServerComponent></ServerComponent>
 
-<ServerComponent></ServerComponent>
-
 @code {
 
 	IReadOnlyList<Server>? server = ServerRepository.GetAll();
+
+	private void Delete(int ServerId)
+	{
+		if (server != null)
+		{
+			ServerRepository.Delete(ServerId);
+			server = ServerRepository.GetAll();
+		}
+	}
 
 }

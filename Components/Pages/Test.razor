@@ -1,19 +1,1 @@
 ﻿@page "/test"
-<!-- 只保留核心 MudBlazor 控件，排除布局/其他代码干扰 -->
-<MudPaper Class="p-6 max-w-md mx-auto mt-8">
-    <!-- 测试按钮（最基础的控件） -->
-    <MudButton OnClick="() => _count++" Color="Primary" Variant="Filled">
-        点击计数：@_count
-    </MudButton>
-
-    <!-- 测试输入框（绑定） -->
-    <MudTextField T="string" @bind-Value="_inputValue" Label="测试输入框" Margin="Normal" />
-    
-    <!-- 测试显示绑定值 -->
-    <MudTypography Class="mt-4">你输入的内容：@_inputValue</MudTypography>
-</MudPaper>
-
-@code {
-    private int _count = 0;
-    private string _inputValue = string.Empty;
-}

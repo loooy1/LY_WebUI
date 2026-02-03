@@ -1,13 +1,9 @@
 using LY_WebUI.Components;
-using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // blazor框架基础服务注册
 builder.Services.AddRazorComponents();
-
-// 注册 MudBlazor 服务
-builder.Services.AddMudServices();
 
 var app = builder.Build();
 
