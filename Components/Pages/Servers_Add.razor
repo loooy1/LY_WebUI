@@ -1,0 +1,40 @@
+﻿@page "/servers/addServer"
+@inject NavigationManager NavigationManager
+
+<h3>新增服务器</h3>
+<EditForm Model="@server" FormName="addServerForm" OnSubmit="@submit">
+
+	<div class="mb-3">
+		<label for="formGroupExampleInput" class="form-label">服务器名称</label>
+		<InputText @bind-Value="@server.Name" class="form-control" id="formGroupExampleInput" placeholder="服务器名称">	</InputText>
+	</div>
+
+	<div class="mb-3">
+		<label for="formGroupExampleInput" class="form-label">服务器城市</label>
+		<InputText @bind-Value="@server.City" class="form-control" id="formGroupExampleInput" placeholder="服务器城市">	</InputText>
+	</div>
+
+	<br />
+	<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">新增</MudButton>
+	<br />
+	<a href="/servers" class="btn btn-primary">返回服务器列表</a>
+
+</EditForm>
+
+
+@code {
+
+	[SupplyParameterFromForm(FormName ="addServerForm")]
+	private Server server { get; set; } = new Server() { IsOnline = false };
+
+
+	private void submit(EditContext args)
+	{
+		if (server != null)
+		{
+			ServerRepository.Add(server);
+			NavigationManager.NavigateTo("/servers");
+		}
+
+	}
+}

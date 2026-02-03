@@ -3,7 +3,7 @@ using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// blazor框架基础服务注册
 builder.Services.AddRazorComponents();
 
 // 注册 MudBlazor 服务

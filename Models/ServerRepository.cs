@@ -44,7 +44,7 @@ namespace LY_WebUI.Models
             }
         }
 
-        public static void Update(Server server)
+        public static void Update(Server? server)
         {
             if (server is null) throw new ArgumentNullException(nameof(server));
 

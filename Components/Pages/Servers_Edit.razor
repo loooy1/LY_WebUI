@@ -1,8 +1,9 @@
-﻿@page "/servers/{id:int}"
+﻿@page "/servers/Edit{id:int}"
+@inject NavigationManager NavigationManager
 
 @if(!string.IsNullOrEmpty(test) && server != null)
 {
-	<EditForm Model="server" FormName="editServerForm" OnSubmit="submit">
+	<EditForm Model="@server" FormName="editServerForm" OnSubmit="@submit">
 		<InputNumber @bind-Value="@server.ServerId" hidden>   	</InputNumber>
 		<InputText @bind-Value="@server.Name">   	</InputText>
 		<InputText @bind-Value="@server.City">   	</InputText>
@@ -36,5 +37,6 @@
 	private void submit(EditContext args)
 	{
 		ServerRepository.Update(server);
+		NavigationManager.NavigateTo("/servers");
 	}
 }

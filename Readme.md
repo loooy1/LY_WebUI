@@ -78,6 +78,18 @@ step6  wwwroot 静态资源
 
 7.EditForm 表单组件 model绑定
 
+8.空合并赋值运算符
+```
+当左侧为 null 时，将右侧的值赋给左侧；否则保持左侧原值不变。
+server ??= ServerRepository.GetById(id);  
+```
+
+9.数据注解和表单验证(MudBlazor有现成的)
+
+10.导航管理器 NavigationManager 依赖注入 inject 注册和webapi一样
+```
+
+
 </details>
 
 

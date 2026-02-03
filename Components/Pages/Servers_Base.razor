@@ -29,10 +29,14 @@
 		<li style="color:@(srv.IsOnline ? "green" : "red")">
 			@($"name is {srv.Name} city is {srv.City} and isonline:{(srv.IsOnline ? "在线" : "离线")}")
 			&nbsp;
-			<a href="@($"servers/{srv.ServerId}")" class="btn btn-link">Edit</a>
+			<a href="@($"servers/Edit{srv.ServerId}")" class="btn btn-link">Edit</a>
 		</li>
 	}
 </ul>
+
+<div>
+	<a href="/servers/addServer" class="btn btn-primary">增加服务器</a>
+</div>
         
 <ServerComponent></ServerComponent>
 
