@@ -8,22 +8,15 @@
         <div style=  "@($"color: {(server.IsOnline ? "green" : "red")}")"   >
             @($"name is {server.Name} city is {server.City} and isonline:{(server.IsOnline ? "在线" : "离线")}")
         </div>
-        
-        <!-- 上线/下线表单：行内排列 + 精简样式 -->
-        <EditForm Enhance="true" Model="@server" FormName="ServerForm" OnSubmit="@submit"
-                  style="display: inline-block; margin: 0; padding: 0; border: none;">
-            <!-- 隐藏输入框：移除冗余空格 + 自闭合写法（更规范） -->
-            <InputNumber @bind-Value="@server.ServerId" hidden />
-            <InputText @bind-Value="@server.Name" hidden />
-            <InputText @bind-Value="@server.City" hidden />
-            <InputCheckbox @bind-Value="@server.IsOnline" hidden />
 
             <!-- 按钮样式优化：和其他按钮尺寸统一 -->
-            <button type="submit" class="btn btn-primary btn-sm"
-                    style="padding: 2px 8px; font-size: 12px; margin: 0;">
+            <button type="button" class="btn btn-primary btn-sm"
+                    style="padding: 2px 8px; font-size: 12px; margin: 0;"
+                    @onclick="ChangeStatus">
+
                 @(server.IsOnline ? "下线" : "上线")
             </button>
-        </EditForm>
+
     </li>
 
 
@@ -32,15 +25,10 @@
 
 @code {
 
-	[SupplyParameterFromForm]
-	private Server? server { get; set; }
+    private Server? server = new Server() { ServerId = 100, Name = "DefaultName", City = "DefaultCity", IsOnline = false };
+              
 
-	protected override void OnParametersSet()
-	{
-		server ??= new Server() {ServerId=100, Name="DefaultName", City="DefaultCity", IsOnline=false };
-	}
-
-	private void submit(EditContext args)
+    private void ChangeStatus()
 	{
 		if (server != null)
 			{

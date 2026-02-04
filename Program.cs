@@ -3,7 +3,8 @@ using LY_WebUI.Components;
 var builder = WebApplication.CreateBuilder(args);
 
 // blazor框架基础服务注册
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents(); //交互性渲染模式
 
 var app = builder.Build();
 
@@ -23,6 +24,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 
 //映射 Razor 组件
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>().
+    AddInteractiveServerRenderMode(); //交互性渲染模式
 
 app.Run();

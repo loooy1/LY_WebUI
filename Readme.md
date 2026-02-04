@@ -93,7 +93,16 @@ server ??= ServerRepository.GetById(id);
 
 ```切换界面时，更新部分界面而不刷新整个页面，是实现交互性应用程序的关键。Blazor 提供了增强导航功能(Blazor.web.js文件)。
 
-14.增强表单
+14.增强表单   Enhance= "true"
+
+15.blazor的交互性
+```
+SignalR 通道:小数据的更新，框架自带。 
+需要开启交互性配置:
+在program.cs中配置 + 渲染方式(@rendermode="InteractiveServer",推荐在使用处，指定组件渲染方式，可在全局位置(App.razor中的<Routes />)设置)
+
+
+http请求:大数据的更新，需要手动调用 HttpClient。
 
 ```
 
