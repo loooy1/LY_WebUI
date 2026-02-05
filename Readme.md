@@ -95,14 +95,23 @@ server ??= ServerRepository.GetById(id);
 
 14.增强表单   Enhance= "true"
 
-15.blazor的交互性
+15.blazor的交互式服务端渲染/静态服务端渲染
 ```
+交互式服务端渲染：
 SignalR 通道:小数据的更新，框架自带。 
 需要开启交互性配置:
 在program.cs中配置 + 渲染方式(@rendermode="InteractiveServer",推荐在使用处，指定组件渲染方式，可在全局位置(App.razor中的<Routes />)设置)
+1.创建交互性应用程序，交互模式 选择Server
+2.可以选择 单页渲染 或者 全局渲染(@rendermode="InteractiveServer" 位置不同)
 
 
+静态服务端渲染：
 http请求:大数据的更新，需要手动调用 HttpClient。
+有些指定cookies/session的请求，SignalR通道无法处理，需要使用HttpClient。
+如果想指定组件为静态渲染，可以使用 @attribute [ExcludeFromInteractiveRouting] 特性排除交互式,此组件必须是可路由组件(@page 指令)。
+
+
+
 
 ```
 

@@ -1,18 +1,20 @@
 ﻿@page "/servers"
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
 
 <h3>Servers</h3>
 <br />
 <div class="container-fluid text-center">
 	<div class="row w-150">
 		@* 按钮 *@
-		@foreach (var srv in server)
+		@foreach (var srv in serverCityList)
 		{
-			<div class="card" style="width: 18rem;">
+			<div class="card @((city != null && city == srv.City) ? "border-primary" : "")" style="width: 18rem;">
 				<img src="/images/Test.jpeg" class="card-img-top" >
 				<div class="card-body">
-					<button type="button" class="btn btn-primary">@srv.City</button>
+					<button type="button" class="btn btn-primary" @onclick="() => SelectCity(srv.City)">@srv.City</button>
 				</div>
-
 
 			</div>
 		}
@@ -21,10 +23,16 @@
 
 </div>
 
+<br />
+<div>
+	<input type="text" class="form-control" placeholder="搜索服务器" @onchange="HandleServerFilter"/>
+	<button class="btn btn-secondary mt-2" @onclick="HandleServerSearch">搜索</button>
+</div>
 
 
 <ul>
-	@foreach (var srv in server)
+	@* ??空合并运算符，左侧为空取右边，右边是空的序列 *@
+	@foreach (var srv in selectCitys ?? System.Linq.Enumerable.Empty<Server>() )
 	{
 		<li style="color:@(srv.IsOnline ? "green" : "red"); display: flex; align-items: center; gap: 8px;">
 			@($"name is {srv.Name} city is {srv.City} and isonline:{(srv.IsOnline ? "在线" : "离线")}")
@@ -33,10 +41,12 @@
 			<a href="@($"servers/Edit{srv.ServerId}")" class="btn btn-link" style="display: inline-block;">Edit</a>
 
 			<!-- 删除表单：改为行内块，加左边距 -->
-			<EditForm Model="server" FormName="@($"from_{srv.ServerId}")" OnValidSubmit="@(() => Delete(srv.ServerId))"
+			@* <EditForm Model="selectCitys" FormName="@($"from_{srv.ServerId}")" OnValidSubmit="@(() => Delete(srv.ServerId))"
 					  style="display: inline-block; margin: 0; padding: 0;">
 				<button type="submit" class="btn btn-primary" style="padding: 2px 8px; font-size: 12px;">删除</button>
-			</EditForm>
+			</EditForm> *@
+
+			<button type="button" class="btn btn-danger" @onclick="() => Delete(srv.ServerId)">删除</button>
 		</li>
 	}
 </ul>
@@ -44,21 +54,61 @@
 <div>
 	<a href="/servers/addServer" class="btn btn-primary">增加服务器</a>
 </div>
-        
-@* 指定交互性渲染模式 *@
-<ServerComponent @rendermode="InteractiveServer"></ServerComponent>
 
 @code {
 
-	IReadOnlyList<Server>? server = ServerRepository.GetAll();
-
+	private List<Server>? serverCityList = ServerRepository.GetCityList();
+	private List<Server>? selectCitys;
+	private string? city;
+	private string? serverFilter;
+	/// <summary>
+	/// 删除指定服务器
+	/// </summary>
+	/// <param name="ServerId"></param>
 	private void Delete(int ServerId)
 	{
-		if (server != null)
+		if (serverCityList != null)
 		{
 			ServerRepository.Delete(ServerId);
-			server = ServerRepository.GetAll();
+			NavigationManager.NavigateTo("/servers");
 		}
 	}
 
+	/// <summary>
+	/// 点击事件 选择城市
+	/// </summary>
+	/// <param name="city"></param>
+	private void SelectCity(string city)
+	{
+		this.city = city;
+		this.selectCitys = ServerRepository.GetByCity(city);
+		StateHasChanged();
+	}
+
+	/// <summary>
+	/// 搜索框 处理服务器过滤
+	/// </summary>
+	/// <param name="args"></param>
+	private void HandleServerFilter(ChangeEventArgs args)
+	{
+		this.serverFilter = args.Value?.ToString()??string.Empty;
+
+	}
+
+	/// <summary>
+	/// 按钮 处理服务器搜索
+	/// </summary>
+	private void HandleServerSearch()
+	{
+		if (!string.IsNullOrEmpty(this.serverFilter))
+		{
+			this.selectCitys = ServerRepository.GetServersByFilter(serverFilter);
+			this.city = null;
+		}
+		else
+		{
+			this.selectCitys = null;
+		}
+
+	}
 }
