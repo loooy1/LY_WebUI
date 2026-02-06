@@ -28,12 +28,11 @@ namespace LY_WebUI.Models
 
         public static List<Server> GetCityList()
         {
-            // 创建副本并按 City 去重，忽略大小写，保留每个城市第一次出现的 Server
+            // 去重
             lock (_lock)
             {
                 return _servers
-                    .GroupBy(s => s.City ?? string.Empty, StringComparer.OrdinalIgnoreCase)
-                    .Select(g => g.First())
+                    .DistinctBy(s => s.City ?? string.Empty, StringComparer.OrdinalIgnoreCase)
                     .ToList();
             }
         }

@@ -28,3 +28,5 @@ app.MapRazorComponents<App>().
     AddInteractiveServerRenderMode(); //交互性渲染模式
 
 app.Run();
+
+

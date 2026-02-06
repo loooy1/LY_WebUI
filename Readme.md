@@ -1,4 +1,5 @@
 # 此项目为前端学习项目 后面会调用WebAPI进行数据交互
+# 此项目技术栈为 Blazor Server + bootstrap +	html混合
 
 <details>
 <summary>## 项目结构</summary>
@@ -63,7 +64,6 @@ step6  wwwroot 静态资源
 5.显式razor表达式
 ```
  <h3>@(Title)</h3>
-
 ```
 6.路由参数及约束
 
@@ -88,12 +88,16 @@ server ??= ServerRepository.GetById(id);
 非blazor应用的交互性通常由 JavaScript 提供。
 •非交互性应用（non‑interactive）：服务器返回的是静态或服务器端完全渲染的 HTML，客户端没有或没有激活运行时，
 用户交互只能通过整页刷新提交到服务器（传统静态站点、纯 SSR 页面、或只做预渲染但不激活的组件）。
-
+```
 13.增强导航
 
-```切换界面时，更新部分界面而不刷新整个页面，是实现交互性应用程序的关键。Blazor 提供了增强导航功能(Blazor.web.js文件)。
-
-14.增强表单   Enhance= "true"
+```
+切换界面时，更新部分界面而不刷新整个页面，是实现交互性应用程序的关键。Blazor 提供了增强导航功能(Blazor.web.js文件)。
+```
+14.增强表单   
+```
+Enhance= "true"
+```
 
 15.blazor的交互式服务端渲染/静态服务端渲染
 ```
@@ -104,16 +108,17 @@ SignalR 通道:小数据的更新，框架自带。
 1.创建交互性应用程序，交互模式 选择Server
 2.可以选择 单页渲染 或者 全局渲染(@rendermode="InteractiveServer" 位置不同)
 
-
 静态服务端渲染：
 http请求:大数据的更新，需要手动调用 HttpClient。
 有些指定cookies/session的请求，SignalR通道无法处理，需要使用HttpClient。
 如果想指定组件为静态渲染，可以使用 @attribute [ExcludeFromInteractiveRouting] 特性排除交互式,此组件必须是可路由组件(@page 指令)。
 
-
-
-
 ```
+
+16.视图-状态双向数据绑定
+```
+// 双向绑定语法糖
+<input type="text" class="form-control" placeholder="搜索服务器" @bind-value="serverFilter" @bind-value:event="oninput" />
 
 
 </details>

@@ -3,6 +3,7 @@
 @rendermode InteractiveServer
 
 
+@* 服务器城市显示界面 *@
 <h3>Servers</h3>
 <br />
 <div class="container-fluid text-center">
@@ -23,13 +24,16 @@
 
 </div>
 
+
+@* 搜索框及搜索按钮 *@
 <br />
 <div>
-	<input type="text" class="form-control" placeholder="搜索服务器" @onchange="HandleServerFilter"/>
+	<input type="text" class="form-control" placeholder="搜索服务器" @bind-value="serverFilter" @bind-value:event="oninput" />
 	<button class="btn btn-secondary mt-2" @onclick="HandleServerSearch">搜索</button>
 </div>
 
 
+@* 服务器显示界面 *@
 <ul>
 	@* ??空合并运算符，左侧为空取右边，右边是空的序列 *@
 	@foreach (var srv in selectCitys ?? System.Linq.Enumerable.Empty<Server>() )
@@ -51,16 +55,41 @@
 	}
 </ul>
 
+
+@* 增加服务器按钮 *@
 <div>
 	<a href="/servers/addServer" class="btn btn-primary">增加服务器</a>
 </div>
 
 @code {
 
+	#region 字段及属性
+	//城市列表
 	private List<Server>? serverCityList = ServerRepository.GetCityList();
+
+	//选择的城市服务器列表
 	private List<Server>? selectCitys;
+
+	//选择的城市
 	private string? city;
-	private string? serverFilter;
+
+	//服务器过滤字段
+	private string? _serverFilter;
+	//服务器过滤属性
+	private string? serverFilter
+	{
+		get=> _serverFilter;
+		set 
+		{
+			_serverFilter = value;
+			this.selectCitys = ServerRepository.GetServersByFilter(serverFilter);
+		}
+	}
+
+	#endregion
+
+
+	#region 私有方法
 	/// <summary>
 	/// 删除指定服务器
 	/// </summary>
@@ -89,6 +118,7 @@
 	/// 搜索框 处理服务器过滤
 	/// </summary>
 	/// <param name="args"></param>
+	[Obsolete("不再采取onchange而弃用")]
 	private void HandleServerFilter(ChangeEventArgs args)
 	{
 		this.serverFilter = args.Value?.ToString()??string.Empty;
@@ -111,4 +141,6 @@
 		}
 
 	}
+
+	#endregion
 }
